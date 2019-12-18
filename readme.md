@@ -1,0 +1,1 @@
+helpers dipake di RupiahkuController buat dapetin tag dan type id

@@ -1,0 +1,38 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Acme', sans-serif;
+  text-align: center;
+  background-image: url(../img/main-bg.jpg);
+  background-size: cover;
+  color: whitesmoke;
+  height: 100vh;
+}
+
+nav {
+  position: fixed;
+}
+
+.card {
+  width: 80%;
+  margin: auto;
+  top: 5rem;
+}
+
+.card.iniform {
+  margin-bottom: 5rem;
+  top: 3rem;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  height: 2rem;
+  background-color: red;
+  width: 100%;
+  line-height: 2rem;
+}
