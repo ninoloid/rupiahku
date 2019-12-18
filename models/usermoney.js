@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
   class UserMoney extends Model { }
   UserMoney.init({
     totalMoney: DataTypes.INTEGER,
-    user_id: DataTypes.INTEGER
+    UserId: DataTypes.INTEGER
   }, { sequelize });
   // UserMoney.associate = function (models) {
   //   // associations can be defined here

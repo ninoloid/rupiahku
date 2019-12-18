@@ -24,10 +24,23 @@ class UserController {
             } else res.send('udah ada yg login')
           })
           .catch(err => res.send(err.message))
+      })
+      .catch(err => res.send(err.message))
+  }
 
-
-
-
+  static userLogout(req, res) {
+    User.findAll({ where: { isLogin: true } })
+      .then(result => {
+        if (result.length > 0) {
+          User.update({
+            isLogin: false
+          }, {
+            where: {
+              isLogin: true
+            }
+          })
+        }
+        res.redirect('/login')
       })
       .catch(err => res.send(err.message))
   }

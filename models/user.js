@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
   }, { sequelize });
   User.associate = function (models) {
     User.belongsToMany(models.Action, { through: models.Transaction })
+    User.hasOne(models.UserMoney)
   };
   return User;
 };

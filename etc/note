@@ -1,0 +1,53 @@
+  // static add(req, res) {
+  //   User.findAll({ where: { isLogin: "true" } })
+  //     .then(user => {
+  //       const tag = getTagTypeId(req.body.type).tag
+  //       if (tag === 'income') {
+  //         UserMoney.increment('totalMoney', { by: req.body.nominal, where: { UserId: user[0].id } })
+  //           .then(() => {
+  //             Action.create({
+  //               nominal: req.body.nominal,
+  //               tag: getTagTypeId(req.body.type).tag,
+  //               description: req.body.description,
+  //               type_id: getTagTypeId(req.body.type).typeid
+  //             })
+  //               .then(action => {
+  //                 Transaction.create({
+  //                   UserId: user[0].id,
+  //                   ActionId: action.id
+  //                 })
+  //                   .then(success => res.redirect('/menu'))
+  //                   .catch(err => res.send(err.message))
+  //               })
+  //               .catch(err => res.send(err.message))
+  //           })
+  //           .catch(err => res.send(err.message))
+  //       }
+  //       else if (tag === 'expense') {
+  //         UserMoney.findAll({ where: { UserId: user[0].id } })
+  //           .then(result => {
+  //             if (result[0].totalMoney >= req.body.nominal) {
+  //               UserMoney.decrement('totalMoney', { by: req.body.nominal, where: { UserId: user[0].id } })
+  //               Action.create({
+  //                 nominal: req.body.nominal,
+  //                 tag: getTagTypeId(req.body.type).tag,
+  //                 description: req.body.description,
+  //                 type_id: getTagTypeId(req.body.type).typeid
+  //               })
+  //                 .then(action => {
+  //                   Transaction.create({
+  //                     UserId: user[0].id,
+  //                     ActionId: action.id
+  //                   })
+  //                     .then(() => res.redirect('/menu'))
+  //                     .catch(err => res.send(err.message))
+  //                 })
+  //                 .catch(err => res.send(err.message))
+  //             }
+  //             else res.send('uangnya kurang')
+  //           })
+  //           .catch(err => res.send(err.message))
+  //       }
+  //     })
+  //     .catch(err => res.send(err.message))
+  // }

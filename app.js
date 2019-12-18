@@ -8,6 +8,7 @@ app.use('/rupiahku', require('./routes/rupiahkuRouter'))
 app.get('/login', (req, res) => res.render('loginForm.ejs'))
 app.post('/login', User.userLogin)
 app.get('/menu', (req, res) => res.render('menu.ejs'))
+app.get('/logout', User.userLogout)
 
 
 app.listen(3000, () => console.log('Express is running on port 3000'))
