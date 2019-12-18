@@ -36,3 +36,8 @@ footer {
   width: 100%;
   line-height: 2rem;
 }
+
+.menuButton {
+  width: 50%; 
+  margin: 20px auto 0;
+}

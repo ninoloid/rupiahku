@@ -11,9 +11,9 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
     integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
     crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="../../css/style.css">
 
-  <title>Form Tambah Subject</title>
+  <title>Add Expense</title>
 </head>
 
 <body>
@@ -21,21 +21,32 @@
 
   <div class="card text-center bg-dark iniform" style="width: 75vh;">
     <div class="card-header">
-      Halo, <%= data[0].username %><br>
-      Uang yang kamu miliki sebesar : <%= money[0].totalMoney %>
+      PENGELUARAN
     </div>
-    <a class="btn btn-primary menuButton" href="/rupiahku/manage/add-income">Tambah Pemasukkan</a>
-    <a class="btn btn-warning menuButton" href="/rupiahku/manage/add-expense">Tambah Pengeluaran</a>
-    <a class="btn btn-success menuButton" href="/rupiahku/manage/report">Lihat Laporan</a>
     <div class="card-body">
-      <form action="/subjects/add" method="post">
+      <form action="/rupiahku/manage/add-income" method="post">
         <div class="form-row">
           <div class="form-group col-md-12">
-            <label for="subjectName">Subject Name</label>
-            <input type="text" name="subjectName" class="form-control" id="subjectName" placeholder="Nama Subject">
+            <label for="nominal">Nominal</label>
+            <input type="text" name="nominal" class="form-control" id="nominal" placeholder="Berapa?">
           </div>
         </div>
-        <button type="submit" class="btn btn-primary">Add</button>
+        <div class="form-group">
+          <label for="type">Penggunaan</label>
+          <select class="form-control" id="type" name="type">
+            <option>Makan</option>
+            <option>Belanja</option>
+            <option>Menabung</option>
+            <option>Hiburan</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <label for="description">Deskripsi</label>
+            <input type="text" name="description" class="form-control" id="description" placeholder="Deskripsi">
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Tambah</button>
       </form>
     </div>
     <div class="card-footer text-muted"></div>

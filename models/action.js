@@ -9,8 +9,8 @@ module.exports = (sequelize, DataTypes) => {
     description: DataTypes.STRING,
     type_id: DataTypes.INTEGER
   }, { sequelize });
-  // Action.associate = function (models) {
-  //   // associations can be defined here
-  // };
+  Action.associate = function (models) {
+    Action.belongsToMany(models.User, { through: models.Transaction })
+  };
   return Action;
 };

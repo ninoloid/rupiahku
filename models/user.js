@@ -8,8 +8,8 @@ module.exports = (sequelize, DataTypes) => {
     password: DataTypes.STRING,
     isLogin: DataTypes.BOOLEAN
   }, { sequelize });
-  // User.associate = function(models) {
-  //   // associations can be defined here
-  // };
+  User.associate = function (models) {
+    User.belongsToMany(models.Action, { through: models.Transaction })
+  };
   return User;
 };
