@@ -21,8 +21,9 @@
 
   <div class="card text-center bg-dark iniform" style="width: 75vh;">
     <div class="card-header">
-      Halo, <%= data[0].username %><br>
-      Uang yang kamu miliki sebesar : <%= money[0].totalMoney %>
+      <h3>Halo, <%= user.username %><br>
+        Sisa uang kamu : Rp
+        <%= new Intl.NumberFormat('id-ID', { currency: 'IDR' }).format(money.totalMoney) %></h3>
     </div>
     <div class="card-body">
       <a class="btn btn-primary menuButton" href="/rupiahku/manage/add-income">Tambah Pemasukkan</a>

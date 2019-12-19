@@ -21,25 +21,15 @@
 
   <div class="card text-center bg-dark iniform" style="width: 50vh;">
     <div class="card-header">
-      LOGIN
+      ERROR
     </div>
     <div class="card-body">
-      <form action="/login" method="post">
-        <div class="form-row">
-          <div class="form-group col-md-12"></div>
-          <label for="username">Username</label>
-          <input type="text" name="username" class="form-control" id="username" placeholder="username">
-        </div>
-        <div class="form-row">
-          <div class="form-group col-md-12"></div>
-          <label for="password">Password</label>
-          <input type="password" name="password" class="form-control" id="password" placeholder="******">
-        </div>
-        <button type="submit" class="btn btn-primary">Login</button>
+      <div><%= message %></div>
+      <div>
+        <a class="btn btn-primary" href="/menu">Close</a>
+      </div>
     </div>
-    </form>
-  </div>
-  <div class="card-footer text-muted"></div>
+    <div class="card-footer text-muted"></div>
   </div>
   <footer class="bg-dark">Copyright &copy; 2019 - Ahmad Muhammad Satria Adiputra</footer>
 </body>

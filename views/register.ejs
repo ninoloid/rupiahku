@@ -13,33 +13,40 @@
     crossorigin="anonymous"></script>
   <link rel="stylesheet" href="./css/style.css">
 
-  <title>Login Page</title>
+  <title>Register</title>
 </head>
 
 <body>
   <%- include('../partials/header') %>
 
-  <div class="card text-center bg-dark iniform" style="width: 50vh;">
+  <div class="card text-center bg-dark iniform" style="width: 75vh;">
     <div class="card-header">
-      LOGIN
+      Register
     </div>
     <div class="card-body">
-      <form action="/login" method="post">
+      <form action="/register" method="post">
         <div class="form-row">
-          <div class="form-group col-md-12"></div>
-          <label for="username">Username</label>
-          <input type="text" name="username" class="form-control" id="username" placeholder="username">
+          <div class="form-group col-md-12">
+            <label for="username">Username</label>
+            <input type="text" name="username" class="form-control" id="username" placeholder="Username">
+          </div>
         </div>
         <div class="form-row">
-          <div class="form-group col-md-12"></div>
-          <label for="password">Password</label>
-          <input type="password" name="password" class="form-control" id="password" placeholder="******">
+          <div class="form-group col-md-12">
+            <label for="password">Password</label>
+            <input type="password" name="password" class="form-control" id="password" placeholder="********">
+          </div>
         </div>
-        <button type="submit" class="btn btn-primary">Login</button>
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <label for="retype">Retype Password</label>
+            <input type="password" name="retype" class="form-control" id="retype" placeholder="********">
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Tambah</button>
+      </form>
     </div>
-    </form>
-  </div>
-  <div class="card-footer text-muted"></div>
+    <div class="card-footer text-muted"></div>
   </div>
   <footer class="bg-dark">Copyright &copy; 2019 - Ahmad Muhammad Satria Adiputra</footer>
 </body>

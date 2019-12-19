@@ -19,9 +19,9 @@
 <body>
   <%- include('../partials/header') %>
 
-  <div class="card text-center bg-dark iniform" style="width: 75vh;">
+  <div class="card text-center bg-dark iniform" style="width: 150vh;">
     <div class="card-header">
-      Sisa uang kamu : Rp <%= money %>
+      <h3>Sisa uang kamu : Rp <%= new Intl.NumberFormat('id-ID', { currency: 'IDR' }).format(money) %></h3>
     </div>
     <div class="card-body">
       <table class="table table-dark">
@@ -36,7 +36,7 @@
         <tbody>
           <% result.forEach(item => { %>
           <tr>
-            <th><%= item.nominal %></th>
+            <th>Rp <%= new Intl.NumberFormat('id-ID', { currency: 'IDR' }).format(item.nominal) %></th>
             <td><%= item.tag %></td>
             <td><%= item.description %></td>
             <td><%= item.createdAt %></td>

@@ -1,21 +1,22 @@
-Model = require('../models')
+const Model = require('../models')
+const getTagTypeId = require('../helpers/getTagTypeId')
+const Sequelize = require('sequelize');
 const UserMoney = Model.UserMoney
 const User = Model.User
 const Action = Model.Action
 const Transaction = Model.Transaction
-const getTagTypeId = require('../helpers/getTagTypeId')
-const Sequelize = require('sequelize');
 
 class RupiahkuController {
 
   static add(req, res) {
-    if (req.body.nominal <= 0) res.send('Input yg bener dong')
+    if (req.body.nominal <= 0) res.render('error', { message: 'Tidak bisa menerima value negatif' })
     else {
-      User.findAll({ where: { isLogin: "true" }, include: UserMoney })
+      // User.findAll({ where: { isLogin: "true" }, include: UserMoney })
+      User.findOne({ where: { username: req.session.user.username }, include: UserMoney })
         .then(user => {
           const tag = getTagTypeId(req.body.type).tag
           if (tag === 'income') {
-            UserMoney.update({ totalMoney: Number(user[0].UserMoney.totalMoney) + Number(req.body.nominal) }, { where: { UserId: user[0].id } })
+            UserMoney.update({ totalMoney: Number(user.UserMoney.totalMoney) + Number(req.body.nominal) }, { where: { UserId: user.id } })
               .then(() => {
                 Action.create({
                   nominal: req.body.nominal,
@@ -25,18 +26,20 @@ class RupiahkuController {
                 })
                   .then(action => {
                     Transaction.create({
-                      UserId: user[0].id,
+                      UserId: user.id,
                       ActionId: action.id
                     })
                       .then(success => res.redirect('/menu'))
-                      .catch(err => res.send(err.message))
+                      // .catch(err => res.send(err.message))
+                      .catch(err => res.render('error', { message: err.message }))
                   })
-                  .catch(err => res.send(err.message))
+                  // .catch(err => res.send(err.message))
+                  .catch(err => res.render('error', { message: err.message }))
               })
               .catch(err => res.send(err.message))
           } else if (tag === 'expense') {
-            if (user[0].UserMoney.totalMoney >= req.body.nominal) {
-              UserMoney.update({ totalMoney: Number(user[0].UserMoney.totalMoney) - Number(req.body.nominal) }, { where: { UserId: user[0].id } })
+            if (user.UserMoney.totalMoney >= req.body.nominal) {
+              UserMoney.update({ totalMoney: Number(user.UserMoney.totalMoney) - Number(req.body.nominal) }, { where: { UserId: user.id } })
                 .then(() => {
                   Action.create({
                     nominal: req.body.nominal,
@@ -46,19 +49,23 @@ class RupiahkuController {
                   })
                     .then(action => {
                       Transaction.create({
-                        UserId: user[0].id,
+                        UserId: user.id,
                         ActionId: action.id
                       })
                         .then(success => res.redirect('/menu'))
-                        .catch(err => res.send(err.message))
+                        // .catch(err => res.send(err.message))
+                        .catch(err => res.render('error', { message: err.message }))
                     })
-                    .catch(err => res.send(err.message))
+                    // .catch(err => res.send(err.message))
+                    .catch(err => res.render('error', { message: err.message }))
                 })
-                .catch(err => res.send(err.message))
-            } else res.send('uangnya kurang')
+                // .catch(err => res.send(err.message))
+                .catch(err => res.render('error', { message: err.message }))
+            } else res.render('error', { message: err.message })
           }
         })
-        .catch(err => res.send(err.message))
+        // .catch(err => res.send(err.message))
+        .catch(err => res.render('error', { message: err.message }))
     }
   }
 
@@ -68,49 +75,31 @@ class RupiahkuController {
       case 'Pengeluaran': type = 'expense'; break;
       case 'Pendapatan': type = 'income'; break;
     }
-    User.findAll({ where: { isLogin: "true" }, include: UserMoney })
+    console.log(req.session)
+    User.findOne({ where: { username: req.session.user.username }, include: UserMoney })
       .then(user => {
         let action;
-        if (type) action = Action.findAll({ where: { tag: type }, include: User, order: [['createdAt', 'DESC']] })
-        else action = Action.findAll({ include: User, order: [['type_id'], ['createdAt', 'DESC']] })
+        if (type) action = Action.findAll({ where: { tag: type }, include: User, order: [['tag', 'DESC'], ['id', 'DESC']] })
+        // else action = Action.findAll({ include: User, order: [['type_id'], ['createdAt', 'DESC']] })
+        else action = Action.findAll({ include: User, order: [['tag', 'DESC'], ['id', 'DESC']] })
 
         action
           .then(data => {
             const result = [];
             data.forEach(item => {
-              if (item.Users[0].id === user[0].id) {
+              if (item.Users[0].id === user.id) {
                 result.push(item)
               }
             });
-            const money = String(user[0].UserMoney.totalMoney)
+            const money = String(user.UserMoney.totalMoney)
             res.render('viewReport', { result, money })
           })
-          .catch(err => res.send(err.message))
+          // .catch(err => res.send(err.message))
+          .catch(err => res.render('error', { message: err.message }))
       })
-      .catch(err => res.send(err.message))
-
-
+      // .catch(err => res.send(err.message))
+      .catch(err => res.render('error', { message: err.message }))
   }
-
-
-  // static showReport(req, res) {
-  //   let type;
-  //   switch (req.body.type) {
-  //     case 'Pengeluaran': type = 'expense'; break;
-  //     case 'Pendapatan': type = 'income'; break;
-  //   }
-  //   // User.findAll({ where: { isLogin: "true" }, include: UserMoney })
-  //   //   .then(user => res.send(user))
-  //   //   .catch(err => res.send(err.message))
-  //   let action;
-  //   if (type) action = Action.findAll({ where: { tag: type, description: 'asd' }, include: User, order: [['createdAt', 'DESC']] })
-  //   else action = Action.findAll({ include: User, order: [['type_id'], ['createdAt', 'DESC']] })
-
-  //   action
-  //     .then(data => res.send(data))
-  //     .catch(err => res.send(err.message))
-
-  // }
 }
 
 module.exports = RupiahkuController
