@@ -1,1 +1,1 @@
-helpers dipake di RupiahkuController buat dapetin tag dan type id
+ceritanya pair project
