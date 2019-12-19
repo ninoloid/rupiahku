@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<head>
+  <title>Grafik Pengeluaran dan Pendapatan</title>
+  <script type="text/javascript" src="https://www.chartjs.org/dist/2.9.3/Chart.min.js">
+  </script>
+</head>
+
+<body>
+  <canvas id="myCanvas" width="1280" height="600">Your browser does not support the canvas feature.</canvas>
+  <script type="text/javascript">
+    var canvas = document.getElementById("myCanvas");
+    var ctx = canvas.getContext("2d");
+
+    var myChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: [<%= id %>],
+        datasets: [{
+          label: 'Jumlah Uang',
+          data: [<%= amount %>],
+          backgroundColor: "rgb(100, 100, 100)"
+        }]
+      },
+      options: {
+        responsive: false,
+        legend: {
+          position: 'top',
+        },
+        title: {
+          display: true,
+          text: 'Grafik Pengeluaran dan Pendapatan'
+        }
+      }
+    });
+  </script>
+</body>
+
+</html>

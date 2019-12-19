@@ -4,38 +4,7 @@ const passwordHash = require('../helpers/hash')
 const User = Model.User
 const UserMoney = Model.UserMoney
 
-
-
 class UserController {
-
-  constructor(username, password, date, month, year) {
-    this.username = username
-    this.password = passwordHash(password)
-    this.dateOfBirth = this.dateOfBirth(date, month, year)
-  }
-
-  dateOfBirth(date, month, year) {
-    return `${year}-${month}-${date}`
-  }
-
-  static userRegister(req, res) {
-    if (req.body.password !== req.body.retype) res.render('error', { message: 'Password dan Retype Password Tidak Sesuai' })
-    else {
-      // const user = {
-      //   username: req.body.username,
-      //   password: passwordHash(req.body.password)
-      // }
-      const user = new UserController(req.body.username, req.body.password, req.body.date, req.body.month, req.body.year)
-      User.create(user)
-        .then(data => {
-          req.session.user = data.get()
-          res.redirect('/menu')
-        })
-        // .catch(err => res.send(err.message))
-        .catch(err => res.render('error', { message: err.message }))
-    }
-  }
-
   static userLogin(req, res) {
     User.findOne({ where: { username: req.body.username } })
       .then(user => {
@@ -46,7 +15,7 @@ class UserController {
             UserMoney.findOne({ where: { UserId: user.id } })
               .then(money => {
                 req.session.user = user.get()
-                res.render('home', { user, money })
+                res.render('home.ejs', { user, money })
               })
               // .catch(err => res.send(err.message))
               .catch(err => res.render('error', { message: err.message }))
@@ -92,6 +61,40 @@ class UserController {
         }
       })
       .catch(err => res.send(err.message))
+  }
+
+  // static userLogout(req, res) {
+  //   User.findAll({ where: { isLogin: true } })
+  //     .then(result => {
+  //       if (result.length > 0) {
+  //         User.update({
+  //           isLogin: false
+  //         }, {
+  //           where: {
+  //             isLogin: true
+  //           }
+  //         })
+  //       }
+  //       res.redirect('/login')
+  //     })
+  //     .catch(err => res.send(err.message))
+  // }
+
+  static userRegister(req, res) {
+    if (req.body.password !== req.body.retype) res.render('error', { message: 'Password dan Retype Password Tidak Sesuai' })
+    else {
+      const user = {
+        username: req.body.username,
+        password: passwordHash(req.body.password)
+      }
+      User.create(user)
+        .then(data => {
+          req.session.user = data.get()
+          res.redirect('/menu')
+        })
+        // .catch(err => res.send(err.message))
+        .catch(err => res.render('error', { message: err.message }))
+    }
   }
 }
 

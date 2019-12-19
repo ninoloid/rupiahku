@@ -17,7 +17,8 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    password: DataTypes.STRING
+    password: DataTypes.STRING,
+    dateOfBirth: DataTypes.DATEONLY
   }, {
     sequelize,
     hooks: {

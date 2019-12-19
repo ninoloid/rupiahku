@@ -7,8 +7,5 @@ module.exports = (sequelize, DataTypes) => {
     ActionId: DataTypes.INTEGER,
     UserId: DataTypes.INTEGER
   }, { sequelize });
-  // Transaction.associate = function (models) {
-  //   // associations can be defined here
-  // };
   return Transaction;
 };

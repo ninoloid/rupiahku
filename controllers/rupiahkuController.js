@@ -11,7 +11,6 @@ class RupiahkuController {
   static add(req, res) {
     if (req.body.nominal <= 0) res.render('error', { message: 'Tidak bisa menerima value negatif' })
     else {
-      // User.findAll({ where: { isLogin: "true" }, include: UserMoney })
       User.findOne({ where: { username: req.session.user.username }, include: UserMoney })
         .then(user => {
           const tag = getTagTypeId(req.body.type).tag
@@ -30,13 +29,11 @@ class RupiahkuController {
                       ActionId: action.id
                     })
                       .then(success => res.redirect('/menu'))
-                      // .catch(err => res.send(err.message))
                       .catch(err => res.render('error', { message: err.message }))
                   })
-                  // .catch(err => res.send(err.message))
                   .catch(err => res.render('error', { message: err.message }))
               })
-              .catch(err => res.send(err.message))
+              .catch(err => res.render('error', { message: err.message }))
           } else if (tag === 'expense') {
             if (user.UserMoney.totalMoney >= req.body.nominal) {
               UserMoney.update({ totalMoney: Number(user.UserMoney.totalMoney) - Number(req.body.nominal) }, { where: { UserId: user.id } })
@@ -53,18 +50,14 @@ class RupiahkuController {
                         ActionId: action.id
                       })
                         .then(success => res.redirect('/menu'))
-                        // .catch(err => res.send(err.message))
                         .catch(err => res.render('error', { message: err.message }))
                     })
-                    // .catch(err => res.send(err.message))
                     .catch(err => res.render('error', { message: err.message }))
                 })
-                // .catch(err => res.send(err.message))
                 .catch(err => res.render('error', { message: err.message }))
             } else res.render('error', { message: err.message })
           }
         })
-        // .catch(err => res.send(err.message))
         .catch(err => res.render('error', { message: err.message }))
     }
   }
@@ -75,12 +68,10 @@ class RupiahkuController {
       case 'Pengeluaran': type = 'expense'; break;
       case 'Pendapatan': type = 'income'; break;
     }
-    console.log(req.session)
     User.findOne({ where: { username: req.session.user.username }, include: UserMoney })
       .then(user => {
         let action;
         if (type) action = Action.findAll({ where: { tag: type }, include: User, order: [['tag', 'DESC'], ['id', 'DESC']] })
-        // else action = Action.findAll({ include: User, order: [['type_id'], ['createdAt', 'DESC']] })
         else action = Action.findAll({ include: User, order: [['tag', 'DESC'], ['id', 'DESC']] })
 
         action
@@ -94,10 +85,31 @@ class RupiahkuController {
             const money = String(user.UserMoney.totalMoney)
             res.render('viewReport', { result, money })
           })
-          // .catch(err => res.send(err.message))
           .catch(err => res.render('error', { message: err.message }))
       })
-      // .catch(err => res.send(err.message))
+      .catch(err => res.render('error', { message: err.message }))
+  }
+
+  static printChart(req, res) {
+    User.findOne({ where: { username: req.session.user.username }, include: UserMoney })
+      .then(user => {
+        Action.findAll({ include: User, order: [['id', 'ASC']] })
+          .then(data => {
+            const id = []
+            const amount = []
+            let counter = 1;
+            data.forEach(item => {
+              if (item.Users[0].id === user.id) {
+                id.push(counter)
+                counter++
+                if (item.tag === 'income') amount.push(Number(item.nominal))
+                else amount.push(Number(item.nominal) * -1)
+              }
+            });
+            res.render('chart', { id, amount })
+          })
+          .catch(err => res.render('error', { message: err.message }))
+      })
       .catch(err => res.render('error', { message: err.message }))
   }
 }

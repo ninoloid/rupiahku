@@ -9,5 +9,6 @@ rupiahkuRouter.get('/manage/add-expense', isLoggedIn, (req, res) => res.render('
 rupiahkuRouter.post('/manage/add-expense', Rupiahku.add)
 rupiahkuRouter.get('/manage/report', isLoggedIn, (req, res) => res.render('report.ejs'))
 rupiahkuRouter.post('/manage/report', Rupiahku.showReport)
+rupiahkuRouter.get('/chart', isLoggedIn, Rupiahku.printChart)
 
 module.exports = rupiahkuRouter
