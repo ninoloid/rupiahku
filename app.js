@@ -3,7 +3,7 @@ const User = require('./controllers/userController')
 const session = require('express-session')
 const isLoggedIn = require('./middleware/isLoggedIn')
 const app = express()
-const port = process.env.PORT || 3001
+const port = process.env.PORT || 3000
 
 app.use(session({
   secret: 'ninoloid',
