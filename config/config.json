@@ -4,23 +4,20 @@
     "password": "ninoloid",
     "database": "rupiahku",
     "host": "127.0.0.1",
-    "dialect": "postgres",
-    "operatorsAliases": 0
+    "dialect": "postgres"
   },
   "test": {
     "username": "root",
     "password": null,
     "database": "database_test",
     "host": "127.0.0.1",
-    "dialect": "mysql",
-    "operatorsAliases": false
+    "dialect": "mysql"
   },
   "production": {
-    "username": "root",
-    "password": null,
-    "database": "database_production",
-    "host": "127.0.0.1",
-    "dialect": "mysql",
-    "operatorsAliases": false
+    "username": "kcgekitwdllqwl",
+    "password": "f79122ee051c52183db52db54593d702695e4f60137343fdc11feb8564fbf510",
+    "database": "dbuk5042hgshdi",
+    "host": "ec2-107-21-209-1.compute-1.amazonaws.com",
+    "dialect": "postgres"
   }
 }
